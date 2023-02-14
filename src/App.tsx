@@ -1,22 +1,32 @@
 import { useEffect, useState } from 'react'
 import { PostgrestSingleResponse } from '@supabase/supabase-js'
 import { sb } from './supabase'
+import { UserI, PostI } from './types'
+import Navbar from './components/Navbar'
+import Post from './components/Post'
 
 const App = () => {
-  type Post = {
-    id: number | undefined
-    title: string
-    content: string
+  const [user, setUser] = useState<UserI | null>(null)
+
+  const login = async () => {
+    await sb.auth.signInWithOAuth({ provider: 'google' })
   }
 
-  const [posts, setPosts] = useState<Post[] | null>([])
+  useEffect(() => {
+    const getSession = async () => {
+      const returnedSession = await sb.auth.getSession()
+      setUser(returnedSession?.data?.session?.user?.user_metadata as UserI)
+    }
+    getSession()
+  }, [])
 
-  const defaultPost = { id: undefined, title: '', content: '' }
-  const [post, setPost] = useState<Post>(defaultPost)
+  const [posts, setPosts] = useState<PostI[] | null>([])
+  const defaultPost: PostI = { id: NaN, title: '', content: '' }
+  const [post, setPost] = useState<PostI>(defaultPost)
 
   useEffect(() => {
     const getPosts = async () => {
-      const { data, error }: PostgrestSingleResponse<Post[]> = await sb.from('posts').select()
+      const { data, error }: PostgrestSingleResponse<PostI[]> = await sb.from('posts').select()
       if (error) {
         console.error(error)
         return
@@ -26,7 +36,8 @@ const App = () => {
     getPosts()
   }, [])
 
-  const createPost = async () => {
+  const createPost = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const { data, error } = await sb
       .from('posts')
       .upsert([{ ...post }])
@@ -36,52 +47,64 @@ const App = () => {
       console.error(error)
       return
     }
-    const exists = posts?.find((post: Post) => post.id === data.id)
+    const exists = posts?.find((post: PostI) => post.id === data.id)
     if (exists) {
-      const newPosts = [...(posts as Post[])]
-      const i = posts?.findIndex((post: Post) => post.id === exists.id) as number
+      const newPosts = [...(posts as PostI[])]
+      const i = posts?.findIndex((post: PostI) => post.id === exists.id) as number
       newPosts[i] = data
       setPosts(newPosts)
     } else {
-      setPosts([...(posts as Post[]), data])
+      setPosts([...(posts as PostI[]), data])
     }
     setPost(defaultPost)
   }
 
-  const editPost = (id: number) => {
-    const toEdit = posts?.find((post: Post) => post.id === id) as Post
-    setPost(toEdit)
-  }
-
-  const deletePost = async (id: number) => {
-    await sb.from('posts').delete().eq('id', id)
-    const newPosts = [...(posts as Post[])]
-    const i = posts?.findIndex((post: Post) => post.id === id) as number
-    newPosts.splice(i, 1)
-    setPosts(newPosts)
-  }
-
   return (
     <div>
-      <input
-        type='text'
-        value={post.title}
-        onChange={(e) => setPost({ ...post, title: e.target.value })}
-      />
-      <input
-        type='text'
-        value={post.content}
-        onChange={(e) => setPost({ ...post, content: e.target.value })}
-      />
-      <button onClick={createPost}>Add</button>
-      {posts?.map((post: any) => (
-        <div key={post.id}>
-          <h1>{post.title}</h1>
-          <button onClick={() => editPost(post.id)}>Edit</button>
-          <button onClick={() => deletePost(post.id)}>Delete</button>
-          <p>{post.content}</p>
+      {user ? (
+        <>
+          <Navbar user={user} setUser={setUser} />
+          <div className='container pt-4'>
+            <form
+              className='d-flex flex-column w-50 m-auto border border-dashed border-primary rounded p-4'
+              onSubmit={createPost}
+            >
+              <div className='mb-3'>
+                <label className='form-label text-primary'>Title</label>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={post.title}
+                  onChange={(e) => setPost({ ...post, title: e.target.value })}
+                  required
+                />
+              </div>
+              <div className='mb-3'>
+                <label className='form-label text-primary'>Post</label>
+                <textarea
+                  className='form-control'
+                  rows={4}
+                  value={post.content}
+                  onChange={(e) => setPost({ ...post, content: e.target.value })}
+                  required
+                />
+              </div>
+              <input className='btn btn-primary w-25 m-auto' type='submit' value='Add' />
+            </form>
+          </div>
+          <div className='container mt-5'>
+            {posts
+              ?.sort((a: PostI, b: PostI) => a.id - b.id)
+              ?.map((post: any) => (
+                <Post posts={posts} setPosts={setPosts} post={post} setPost={setPost} />
+              ))}
+          </div>
+        </>
+      ) : (
+        <div>
+          <button onClick={login}>Login with Google</button>
         </div>
-      ))}
+      )}
     </div>
   )
 }
