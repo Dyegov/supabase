@@ -78,7 +78,8 @@ const Navbar = ({
             </li>
           </ul>
           <div>
-            <span>{user.full_name}</span>
+            <img src={user.picture} alt='' className='profile-picture' />
+            <span className='fw-bold'>{user.full_name}</span>
             <button className='btn btn-secondary ms-3' onClick={logout}>
               Logout
             </button>

@@ -1,4 +1,5 @@
 export type UserI = {
+  id: string
   avatar_url: string
   email: string
   email_verified: boolean
@@ -11,7 +12,8 @@ export type UserI = {
 }
 
 export type PostI = {
-  id: number
+  id: number | undefined
+  author: string
   title: string
   content: string
 }

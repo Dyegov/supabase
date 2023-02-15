@@ -26,7 +26,7 @@ const Post = ({
   }
 
   return (
-    <div key={post.id} className='mb-4'>
+    <div className='mb-4'>
       <div className='d-flex gap-4 align-items-center'>
         <h1>{post.title}</h1>
         <div className='d-flex gap-2'>
