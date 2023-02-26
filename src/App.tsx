@@ -6,6 +6,7 @@ import Post from './components/Post'
 import AddPostForm from './components/AddPostForm'
 
 const App = () => {
+  // Get data from DB
   usePosts()
 
   const user = useStore((state: any) => state.user)

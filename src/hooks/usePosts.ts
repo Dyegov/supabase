@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { sb } from '../supabase'
 import { PostgrestSingleResponse } from '@supabase/supabase-js'
-import { StateI, UserI, PostI } from '../types'
+import { UserI, PostI } from '../types'
 import { useStore } from '../store'
 
 export const usePosts = () => {
