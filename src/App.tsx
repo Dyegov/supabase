@@ -1,3 +1,4 @@
+import { useStore } from './store'
 import { usePosts } from './hooks/usePosts'
 import Navbar from './components/Navbar'
 import Login from './components/Login'
@@ -5,7 +6,13 @@ import Post from './components/Post'
 import AddPostForm from './components/AddPostForm'
 
 const App = () => {
-  const { user, setUser, post, setPost, posts, setPosts, defaultPost } = usePosts()
+  usePosts()
+
+  const user = useStore((state: any) => state.user)
+  const setUser = useStore((state: any) => state.setUser)
+  const setPost = useStore((state: any) => state.setPost)
+  const posts = useStore((state: any) => state.posts)
+  const setPosts = useStore((state: any) => state.setPosts)
 
   return (
     <div>

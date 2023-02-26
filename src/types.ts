@@ -1,3 +1,13 @@
+export type StateI = {
+  user: UserI
+  defaultPost: PostI
+  post: PostI
+  posts: PostI[]
+  setUser: (user: UserI) => void
+  setPost: () => void
+  setPosts: () => void
+}
+
 export type UserI = {
   id: string
   avatar_url: string

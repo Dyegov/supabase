@@ -10,19 +10,15 @@ const Post = ({
   posts: PostI[]
   setPosts: React.Dispatch<React.SetStateAction<PostI[] | null>>
   post: PostI
-  setPost: React.Dispatch<React.SetStateAction<PostI>>
+  setPost: React.Dispatch<React.SetStateAction<PostI | undefined>>
 }) => {
   const editPost = (id: number) => {
-    const toEdit = posts?.find((post: PostI) => post.id === id) as PostI
-    setPost(toEdit)
+    setPost(posts?.find((post: PostI) => post.id === id))
   }
 
   const deletePost = async (id: number) => {
     await sb.from('posts').delete().eq('id', id)
-    const newPosts = [...(posts as PostI[])]
-    const i = posts?.findIndex((post: PostI) => post.id === id) as number
-    newPosts.splice(i, 1)
-    setPosts(newPosts)
+    setPosts(posts.filter((post: PostI) => post.id !== id))
   }
 
   return (

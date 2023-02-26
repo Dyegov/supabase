@@ -1,9 +1,13 @@
-import { usePosts } from '../hooks/usePosts'
+import { useStore } from '../store'
 import { sb } from '../supabase'
 import { PostI } from '../types'
 
 const AddPostForm = ({ userId }: { userId: string }) => {
-  const { post, setPost, posts, setPosts, defaultPost } = usePosts()
+  const defaultPost = useStore((state: any) => state.defaultPost)
+  const post = useStore((state: any) => state.post)
+  const setPost = useStore((state: any) => state.setPost)
+  const posts = useStore((state: any) => state.posts)
+  const setPosts = useStore((state: any) => state.setPosts)
 
   const createPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

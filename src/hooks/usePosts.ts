@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { sb } from '../supabase'
 import { PostgrestSingleResponse } from '@supabase/supabase-js'
-import { UserI, PostI } from '../types'
+import { StateI, UserI, PostI } from '../types'
+import { useStore } from '../store'
 
 export const usePosts = () => {
-  const [user, setUser] = useState<UserI | null>(null)
-  const defaultPost: PostI = { id: undefined, author: '', title: '', content: '' }
-  const [post, setPost] = useState<PostI>(defaultPost)
-  const [posts, setPosts] = useState<PostI[] | null>([])
+  const setUser = useStore((state: any) => state.setUser)
+  const setPosts = useStore((state: any) => state.setPosts)
 
   useEffect(() => {
     const getSession = async () => {
@@ -33,5 +32,5 @@ export const usePosts = () => {
     getSession()
   }, [])
 
-  return { user, setUser, post, setPost, posts, setPosts, defaultPost }
+  return
 }
