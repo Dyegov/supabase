@@ -1,6 +1,7 @@
-import { useStore } from '../store'
-import { sb } from '../supabase'
-import { StateI, PostI } from '../types'
+import { useStore } from '../../store'
+import { sb } from '../../supabase'
+import { StateI, PostI } from '../../types'
+import './Post.scss'
 
 const Post = ({ post }: { post: PostI }) => {
   const setPost = useStore((state: StateI) => state.setPost)
@@ -18,14 +19,14 @@ const Post = ({ post }: { post: PostI }) => {
   }
 
   return (
-    <div className='mb-4'>
-      <div className='d-flex gap-4 align-items-center'>
+    <div className='post'>
+      <div className='post__header'>
         <h1>{post.title}</h1>
-        <div className='d-flex gap-2'>
-          <button className='btn btn-info text-white' onClick={() => editPost(Number(post.id))}>
+        <div className='post__header--buttons'>
+          <button className='edit' onClick={() => editPost(Number(post.id))}>
             Edit
           </button>
-          <button className='btn btn-danger' onClick={() => deletePost(Number(post.id))}>
+          <button className='delete' onClick={() => deletePost(Number(post.id))}>
             Delete
           </button>
         </div>

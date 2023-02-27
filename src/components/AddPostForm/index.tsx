@@ -1,6 +1,7 @@
-import { useStore } from '../store'
-import { sb } from '../supabase'
-import { StateI, PostI } from '../types'
+import { useStore } from '../../store'
+import { sb } from '../../supabase'
+import { StateI, PostI } from '../../types'
+import './AddPostForm.scss'
 
 const AddPostForm = () => {
   const user = useStore((state: StateI) => state.user)
@@ -34,36 +35,29 @@ const AddPostForm = () => {
   }
 
   return (
-    <div className='container pt-4'>
-      <form
-        className='d-flex flex-column w-50 m-auto border border-dashed border-primary rounded p-4'
-        onSubmit={createPost}
-      >
-        <div className='mb-3'>
-          <label className='form-label text-primary'>Title</label>
+    <div className='container add-form'>
+      <form onSubmit={createPost}>
+        <div className='input-group'>
+          <label>Title</label>
           <input
             type='text'
-            className='form-control'
             value={post.title}
             onChange={(e) => setPost({ ...post, title: e.target.value })}
             required
           />
         </div>
-        <div className='mb-3'>
-          <label className='form-label text-primary'>Post</label>
+        <div className='input-group'>
+          <label>Post</label>
           <textarea
-            className='form-control'
             rows={4}
             value={post.content}
             onChange={(e) => setPost({ ...post, content: e.target.value })}
             required
           />
         </div>
-        <input
-          className='btn btn-primary w-25 m-auto'
-          type='submit'
-          value={post.id ? 'Edit' : 'Add'}
-        />
+        <div className='buttons'>
+          <input type='submit' value={post.id ? 'Edit' : 'Add'} />
+        </div>
       </form>
     </div>
   )

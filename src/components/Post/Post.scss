@@ -1,0 +1,25 @@
+@use '../../style.scss' as styles;
+
+.post {
+  margin-bottom: 2em;
+  .post__header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 3rem;
+    }
+    .post__header--buttons {
+      display: flex;
+      gap: 0.5em;
+      .edit {
+        @include styles.btn-secondary;
+      }
+      .delete {
+        @include styles.btn-red;
+      }
+    }
+  }
+}

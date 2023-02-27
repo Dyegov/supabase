@@ -1,0 +1,40 @@
+@use '../../style.scss' as styles;
+@use '../../colors.scss' as colors;
+
+.add-form {
+  display: flex;
+  justify-content: center;
+  form {
+    width: 50%;
+    padding: 2em;
+    border: 1px solid colors.$main;
+    border-radius: 1em;
+    .input-group {
+      margin-bottom: 1em;
+      label {
+        color: colors.$main;
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5em;
+      }
+      input,
+      textarea {
+        border: 1px solid hsl(0, 0%, 85%);
+        width: 100%;
+        padding: 0.2em 0.4em;
+        border-radius: 0.3em;
+        &:focus {
+          outline: none;
+          border: 1px solid colors.$main;
+        }
+      }
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      input[type='submit'] {
+        @include styles.btn-main;
+      }
+    }
+  }
+}

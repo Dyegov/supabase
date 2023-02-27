@@ -1,0 +1,12 @@
+@use '../../style.scss' as styles;
+@use '../../colors.scss' as colors;
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  button {
+    @include styles.btn-main;
+  }
+}

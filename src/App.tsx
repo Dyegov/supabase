@@ -21,7 +21,7 @@ const App = () => {
 
           <AddPostForm />
 
-          <div className='container mt-5'>
+          <div className='container'>
             {posts
               ?.sort((a: PostI, b: PostI) => (a.id ?? 0) - (b?.id ?? 0))
               ?.map((post: PostI) => (

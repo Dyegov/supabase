@@ -1,4 +1,5 @@
-import { sb } from '../supabase'
+import { sb } from '../../supabase'
+import './Login.scss'
 
 const Login = () => {
   const login = async () => {
@@ -7,9 +8,7 @@ const Login = () => {
 
   return (
     <div className='login'>
-      <button className='btn btn-primary' onClick={login}>
-        Login with Google
-      </button>
+      <button onClick={login}>Login with Google</button>
     </div>
   )
 }

@@ -1,13 +1,106 @@
-.profile-picture {
-  width: 3em;
-  border-radius: 50%;
-  border: 2px solid #0d6efd;
-  margin-right: 0.5em;
+@use './colors.scss' as colors;
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
 }
 
-.login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body,
+* {
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  margin-block: 0;
+  font-weight: normal;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    color: colors.$main;
+  }
+}
+
+.container {
+  margin-inline: 10%;
+  margin-top: 3em;
+}
+
+@mixin btn-main {
+  border: none;
+  background-color: colors.$main;
+  color: white;
+  padding: 0.4em 0.8em;
+  border-radius: 0.5em;
+  &:hover {
+    background-color: rgba(colors.$main, 0.9);
+    cursor: pointer;
+  }
+}
+
+@mixin btn-secondary {
+  border: none;
+  background-color: colors.$secondary;
+  color: white;
+  padding: 0.4em 0.8em;
+  border-radius: 0.5em;
+  &:hover {
+    background-color: rgba(colors.$secondary, 0.9);
+    cursor: pointer;
+  }
+}
+
+@mixin btn-red {
+  border: none;
+  background-color: colors.$red;
+  color: white;
+  padding: 0.4em 0.8em;
+  border-radius: 0.5em;
+  &:hover {
+    background-color: rgba(colors.$red, 0.9);
+    cursor: pointer;
+  }
+}
+
+@mixin btn-gray {
+  border: none;
+  background-color: hsl(0, 0%, 50%);
+  color: white;
+  padding: 0.4em 0.8em;
+  border-radius: 0.5em;
+  margin-left: 1em;
+  &:hover {
+    background-color: hsl(0, 0%, 60%);
+    cursor: pointer;
+  }
 }
