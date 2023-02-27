@@ -1,7 +1,7 @@
 import { create } from 'zustand'
-import { UserI, PostI } from './types'
+import { StateI, UserI, PostI } from './types'
 
-export const useStore = create((set) => ({
+export const useStore = create<StateI>((set) => ({
   user: null,
   defaultPost: { id: undefined, author: '', title: '', content: '' },
   post: { id: undefined, author: '', title: '', content: '' },

@@ -1,19 +1,20 @@
 import { useStore } from '../store'
 import { sb } from '../supabase'
-import { PostI } from '../types'
+import { StateI, PostI } from '../types'
 
-const AddPostForm = ({ userId }: { userId: string }) => {
-  const defaultPost = useStore((state: any) => state.defaultPost)
-  const post = useStore((state: any) => state.post)
-  const setPost = useStore((state: any) => state.setPost)
-  const posts = useStore((state: any) => state.posts)
-  const setPosts = useStore((state: any) => state.setPosts)
+const AddPostForm = () => {
+  const user = useStore((state: StateI) => state.user)
+  const defaultPost = useStore((state: StateI) => state.defaultPost)
+  const post = useStore((state: StateI) => state.post)
+  const setPost = useStore((state: StateI) => state.setPost)
+  const posts = useStore((state: StateI) => state.posts)
+  const setPosts = useStore((state: StateI) => state.setPosts)
 
   const createPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { data, error } = await sb
       .from('posts')
-      .upsert([{ ...post, author: userId }])
+      .upsert([{ ...post, author: user?.id }])
       .select()
       .single()
     if (error) {

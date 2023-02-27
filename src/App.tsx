@@ -1,5 +1,6 @@
 import { useStore } from './store'
 import { usePosts } from './hooks/usePosts'
+import { StateI, PostI } from './types'
 import Navbar from './components/Navbar'
 import Login from './components/Login'
 import Post from './components/Post'
@@ -9,31 +10,22 @@ const App = () => {
   // Get data from DB
   usePosts()
 
-  const user = useStore((state: any) => state.user)
-  const setUser = useStore((state: any) => state.setUser)
-  const setPost = useStore((state: any) => state.setPost)
-  const posts = useStore((state: any) => state.posts)
-  const setPosts = useStore((state: any) => state.setPosts)
+  const user = useStore((state: StateI) => state.user)
+  const posts = useStore((state: StateI) => state.posts)
 
   return (
     <div>
       {user ? (
         <>
-          <Navbar user={user} setUser={setUser} />
+          <Navbar />
 
-          <AddPostForm userId={user?.id} />
+          <AddPostForm />
 
           <div className='container mt-5'>
             {posts
-              ?.sort((a: any, b: any) => a.id - b.id)
-              ?.map((post: any) => (
-                <Post
-                  key={post.id}
-                  posts={posts}
-                  setPosts={setPosts}
-                  post={post}
-                  setPost={setPost}
-                />
+              ?.sort((a: PostI, b: PostI) => (a.id ?? 0) - (b?.id ?? 0))
+              ?.map((post: PostI) => (
+                <Post key={post.id} post={post} />
               ))}
           </div>
         </>

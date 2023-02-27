@@ -1,11 +1,11 @@
 export type StateI = {
-  user: UserI
+  user: UserI | null
   defaultPost: PostI
   post: PostI
   posts: PostI[]
   setUser: (user: UserI) => void
-  setPost: () => void
-  setPosts: () => void
+  setPost: (post: PostI) => void
+  setPosts: (posts: PostI[]) => void
 }
 
 export type UserI = {
@@ -19,7 +19,7 @@ export type UserI = {
   picture: string
   provider_id: string
   sub: string
-}
+} | null
 
 export type PostI = {
   id: number | undefined

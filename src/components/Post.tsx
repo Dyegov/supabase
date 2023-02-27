@@ -1,19 +1,15 @@
+import { useStore } from '../store'
 import { sb } from '../supabase'
-import { PostI } from '../types'
+import { StateI, PostI } from '../types'
 
-const Post = ({
-  posts,
-  setPosts,
-  post,
-  setPost,
-}: {
-  posts: PostI[]
-  setPosts: React.Dispatch<React.SetStateAction<PostI[] | null>>
-  post: PostI
-  setPost: React.Dispatch<React.SetStateAction<PostI | undefined>>
-}) => {
+const Post = ({ post }: { post: PostI }) => {
+  const setPost = useStore((state: StateI) => state.setPost)
+  const posts = useStore((state: StateI) => state.posts)
+  const setPosts = useStore((state: StateI) => state.setPosts)
+  const defaultPost = useStore((state: StateI) => state.defaultPost)
+
   const editPost = (id: number) => {
-    setPost(posts?.find((post: PostI) => post.id === id))
+    setPost(posts?.find((post: PostI) => post.id === id) ?? defaultPost)
   }
 
   const deletePost = async (id: number) => {

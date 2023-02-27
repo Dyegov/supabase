@@ -1,13 +1,11 @@
+import { useStore } from '../store'
 import { sb } from '../supabase'
-import { UserI } from '../types'
+import { StateI } from '../types'
 
-const Navbar = ({
-  user,
-  setUser,
-}: {
-  user: UserI
-  setUser: React.Dispatch<React.SetStateAction<UserI | null>>
-}) => {
+const Navbar = () => {
+  const user = useStore((state: StateI) => state.user)
+  const setUser = useStore((state: StateI) => state.setUser)
+
   const logout = async () => {
     await sb.auth.signOut()
     setUser(null)
@@ -78,8 +76,8 @@ const Navbar = ({
             </li>
           </ul>
           <div>
-            <img src={user.picture} alt='' className='profile-picture' />
-            <span className='fw-bold'>{user.full_name}</span>
+            <img src={user?.picture} alt='' className='profile-picture' />
+            <span className='fw-bold'>{user?.full_name}</span>
             <button className='btn btn-secondary ms-3' onClick={logout}>
               Logout
             </button>
