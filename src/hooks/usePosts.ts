@@ -25,10 +25,7 @@ export const usePosts = () => {
           sub: returnedSession?.data?.session?.user?.user_metadata?.sub,
         })
 
-        const { data, error }: PostgrestSingleResponse<PostI[]> = await sb
-          .from('posts')
-          .select()
-          .eq('author', returnedSession?.data?.session?.user?.id)
+        const { data, error }: PostgrestSingleResponse<PostI[]> = await sb.from('posts').select()
 
         if (error) {
           console.error(error)
