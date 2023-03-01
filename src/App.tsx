@@ -1,33 +1,27 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useStore } from './store'
 import { usePosts } from './hooks/usePosts'
-import { StateI, PostI } from './types'
+import { StateI } from './types'
 import Navbar from './components/Navbar'
 import Login from './components/Login'
-import Post from './components/Post'
-import AddPostForm from './components/AddPostForm'
+import Index from './pages/Index'
 
 const App = () => {
   // Get data from DB
   usePosts()
 
   const user = useStore((state: StateI) => state.user)
-  const posts = useStore((state: StateI) => state.posts)
 
   return (
     <div>
       {user ? (
         <>
-          <Navbar />
-
-          <AddPostForm />
-
-          <div className='container'>
-            {posts
-              ?.sort((a: PostI, b: PostI) => (a.id ?? 0) - (b?.id ?? 0))
-              ?.map((post: PostI) => (
-                <Post key={post.id} post={post} />
-              ))}
-          </div>
+          <BrowserRouter>
+            <Navbar />
+            <Routes>
+              <Route index element={<Index />} />
+            </Routes>
+          </BrowserRouter>
         </>
       ) : (
         <Login />

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useStore } from '../../store'
 import { sb } from '../../supabase'
 import { StateI } from '../../types'
@@ -16,10 +17,10 @@ const Navbar = () => {
     <nav>
       <ul>
         <li>
-          <a href='/'>Home</a>
+          <Link to='/'>Home</Link>
         </li>
         <li>
-          <a href='/'>Posts</a>
+          <Link to='/posts'>Posts</Link>
         </li>
       </ul>
       <div className='nav__user'>

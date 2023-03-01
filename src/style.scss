@@ -48,6 +48,7 @@ a {
   color: inherit;
   &:hover {
     color: colors.$main;
+    cursor: pointer;
   }
 }
 
